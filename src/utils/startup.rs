@@ -1,27 +1,6 @@
-
-pub enum Commands {
-    NONE,
-    ADD,
-    SHOW,
-    DELETE,
-    CONFIG,
-    HELP
-}
-pub mod add;
-
-pub fn parse_options() -> Commands {
-    let mut command = Commands::NONE;
-    match std::env::args().nth(1).as_deref() {
-        Some("h") | Some("help") | Some("-h") | Some("--help") => { command = Commands::HELP; print_help(); }
-        Some("a") | Some("add") => { command = Commands::ADD; print!("a");}
-        Some("s") | Some("show") => { command = Commands::SHOW; print!("s"); }
-        Some("d") | Some("delete") => { command = Commands::DELETE; print!("d"); }
-        Some("c") | Some("config") => { command = Commands::CONFIG; print!("c"); }
-        Some(x) => { print!("unrecognized argument: {}\n", x); std::process::exit(1);}
-        _ => { print_usage(); std::process::exit(1); }
-    }
-    return command;
-}
+use crate::commands::{Command, CommandType};
+use crate::commands::CommandType::NONE;
+use crate::utils::error;
 
 fn print_help() {
     let help = r#"
@@ -68,6 +47,11 @@ fn print_help() {
   CONFIG
       CONFDIR         Config file directory. Default: ~/.bm/
       CONFNAME        Config file name. Default: conf.json (~/.bm/conf.json)
+
+  RETURN CODES
+      1               Argument error
+      2               Home directory accessing error
+      3               Store file toml format parsing error
 "#;
     print!("{}\n",help);
 }
@@ -77,4 +61,42 @@ fn print_usage() {
         For detailed help, type `bm help`
     "#;
     print!("{}\n",help);
+}
+
+pub fn parse_options() -> Command {
+    let mut command: Command = Command::new(CommandType::NONE, None);
+    let mut arguments : Vec<String> = std::env::args().collect();
+    arguments.drain(0..2);
+    let mut args_options: Option<Vec<String>> = None;
+    if arguments.len() > 0 {
+        args_options = Some(arguments);
+    }
+
+    match std::env::args().nth(1).as_deref() {
+        Some("h") | Some("help") | Some("-h") | Some("--help") => {
+            command = Command::new(CommandType::HELP, None);
+        }
+        Some("a") | Some("add") => {
+                command = Command::new(CommandType::ADD, args_options);
+        }
+        Some("s") | Some("show") => {
+            command = Command::new(CommandType::SHOW, args_options);
+        }
+        Some("d") | Some("delete") => {
+            command = Command::new(CommandType::DELETE, args_options);
+        }
+        Some("c") | Some("config") => {
+            command = Command::new(CommandType::CONFIG, args_options);
+        }
+        Some(x) => {
+            error::print_error(format!("unrecognized argument: {}\n", x),
+                               error::ErrorCode::UnrecognizedArgument);
+        }
+        _ => {
+            print_usage();
+            error::print_error(String::from(""),
+                               error::ErrorCode::UnrecognizedArgument);
+        }
+    }
+    command
 }
