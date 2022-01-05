@@ -89,13 +89,13 @@ pub fn parse_options() -> Command {
             command = Command::new(CommandType::CONFIG, args_options);
         }
         Some(x) => {
-            error::print_error(format!("unrecognized argument: {}\n", x),
-                               error::ErrorCode::UnrecognizedArgument);
+            error::print_error_and_exit(format!("unrecognized argument: {}\n", x),
+                                        error::ErrorCode::UnrecognizedArgument);
         }
         _ => {
             print_usage();
-            error::print_error(String::from(""),
-                               error::ErrorCode::UnrecognizedArgument);
+            error::print_error_and_exit(String::from(""),
+                                        error::ErrorCode::UnrecognizedArgument);
         }
     }
     command

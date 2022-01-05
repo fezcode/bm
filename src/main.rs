@@ -19,7 +19,10 @@ fn main() {
     println!("--> {:?}", store_map);
     let command = utils::startup::parse_options();
     command.print_command();
-    command.execute(&mut store_map);
+    let added = command.execute(&mut store_map);
+    if added {
+
+    }
     println!("--> {:?}", store_map);
 
 

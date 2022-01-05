@@ -35,7 +35,7 @@ pub fn create_dir_and_file_if_not_exist() -> String {
             return store_path.display().to_string();
         },
         None => {
-            error::print_error(String::from("Home directory cannot be accessed."), error::ErrorCode::HomeDirAccess);
+            error::print_error_and_exit(String::from("Home directory cannot be accessed."), error::ErrorCode::HomeDirAccess);
             String::from("")    // Empty line, does not really do anything, added for compiler error
         }
     }

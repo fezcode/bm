@@ -22,7 +22,7 @@ pub fn parse_string(toml_string : String) -> HashMap<String, String> {
             bm_map = bookmarks.into_iter().map(|bm| (bm.name_clone(), bm.dir_clone()) ).collect();
         },
         Err(e) => {
-            print_error(format!("Store file parsing error: {:?}", e.to_string()), ErrorCode::StoreFileParseError);
+            print_error_and_exit(format!("Store file parsing error: {:?}", e.to_string()), ErrorCode::StoreFileParseError);
         }
     }
     return bm_map;
