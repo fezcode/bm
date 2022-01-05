@@ -15,9 +15,12 @@ bm --help                            : Prints help text.
 ```
 
 ### Add Options
-```bash
-    -a, --add-anyway
-        Adds path to bookmarks even if it does not exist
-     
+```
+   -a, --add-anyway
+       Adds path to bookmarks even if it does not exist
+   
+   -o, --overwrite
+       Overwrites bookmark with new given value if a bookmark with
+       same name exists.
 ```
 

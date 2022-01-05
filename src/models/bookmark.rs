@@ -1,6 +1,6 @@
-use serde_derive::Deserialize;
+use serde_derive::{Serialize, Deserialize};
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Bookmark {
     name: String,
     dir: String,

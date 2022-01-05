@@ -1,8 +1,10 @@
+mod add;
+
 use std::collections::HashMap;
-use std::fs;
 use std::path::PathBuf;
-use crate::utils::error;
 use path_absolutize::*;
+use crate::utils::error;
+use crate::utils::success::ExecutionResult;
 
 ///
 /// # Items
@@ -44,24 +46,34 @@ impl Command {
     }
 
     /// Execute
-    pub fn execute(&self, store: &mut HashMap<String, String>) -> bool {
+    ///
+    pub fn execute(&self, store: &mut HashMap<String, String>) -> ExecutionResult {
         match &self.args {
-            // No arguments
+            // No argument commands
             None => {
-                error::print_error_and_exit("Command cannot be verified with given args".to_string(), error::ErrorCode::VerificationError);
-                return false;
-            }, // No command
+                match self.type_of {
+                    CommandType::HELP => {
+                        crate::utils::startup::print_help();
+                    }
+                    _ => {
+                        error::print_error_and_exit("Command cannot be verified with given args".to_string(),
+                                                    error::ErrorCode::CommandVerificationError);
+                    }
+                }
+                return ExecutionResult{ success: false, write_to_file: false };
+            },
             Some(params) => {
                 match &self.type_of {
                     CommandType::NONE => {
                         error::print_error_and_exit("Impossible command.".to_string(), error::ErrorCode::ImpossibleCommand);
-                        return false;
-                    } // NONE
+                        // return ExecutionResult{ success: false, write_to_file: false };
+                    } // Command NONE
                     CommandType::ADD => {
-                        let mut name : String = params[0].clone();
+                        let name : String = params[0].clone();
                         let mut directory : String = std::env::current_dir().unwrap().to_string_lossy().to_string();
-                        let mut option = params.get(2);
+                        let option = params.get(2);
                         let mut addable = false;
+
                         // Directory is given at least 2 params
                         if params.len() > 1 {
                             directory = params[1].clone();
@@ -86,31 +98,26 @@ impl Command {
                                 },
                             } // add command option
                             directory = canon_dir.absolutize().unwrap().display().to_string();
-                            // TODO check this part
-                            // directory = fs::canonicalize(canon_dir).unwrap().as_path().display().to_string();
-                            // directory = fs::canonicalize(canon_dir).unwrap().display().to_string();
-                            // directory = directory[4..].to_string();
                         }
 
                         println!("[0] -> {}", name);
                         println!("[1] -> {}", directory);
 
-                        // let canon_dir = PathBuf::from(directory);
-
                         if addable {
                             store.insert(name, directory);
-                            return true;
+                            return ExecutionResult{ success: true, write_to_file: true };
                         }
 
+                    } // Command ADD
+                    CommandType::SHOW => {
 
-                    } // ADD
-                    CommandType::SHOW => {} // SHOW
-                    CommandType::DELETE => {} // DELETE
-                    CommandType::CONFIG => {} // CONFIG
-                    CommandType::HELP => {} // HELP
+                    } // Command SHOW
+                    CommandType::DELETE => {} // Command DELETE
+                    CommandType::CONFIG => {} // Command CONFIG
+                    CommandType::HELP => {} // Command HELP
                 } // match command types
             } // Commands
         } // match
-        false
+        return ExecutionResult{ success: false, write_to_file: false };
     }
 }

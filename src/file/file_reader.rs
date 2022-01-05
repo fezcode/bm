@@ -7,6 +7,6 @@ use std::fs;
 ///
 /// ## Arguments
 /// - `filepath` - String representation of store file's path.
-pub fn read_file(filepath : String) -> String {
+pub fn read_file(filepath : &String) -> String {
     fs::read_to_string(filepath).expect("Unable to read file.")
 }
