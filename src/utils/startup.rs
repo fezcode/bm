@@ -2,71 +2,6 @@ use crate::commands::{Command, CommandType};
 use crate::utils::error;
 use crate::utils::error::ErrorCode;
 
-/// Print help text and exit with non-zero code.
-pub fn print_help() {
-    let help = r#"
-  NAME
-      bm - Bookmark Manager
-
-  SYNOPSIS
-      bm [command] [options]
-
-  DESCRIPTION
-      This utility provides shell bookmarks that allows you to save paths and use them.
-      Bookmarks are kept in file called `store file`. Store file is located/created in
-      `~/.bm/store.toml` path. Store file is an TOML file.
-
-  COMMANDS
-      add                             Adds bookmark.
-          add <name> [options]        Adds current directory to bookmarks with given name.
-          add <name> <dir> [options]  Adds given directory to bookmarks with given name.
-
-      show                            Show bookmark.
-          show                        Show all bookmarks.
-          show <name>                 Show bookmark with given name.
-
-      delete
-          delete <name>               Delete bookmark with given name
-
-      config                          Read or edit configuration
-          config set key=value[,k=v]  Sets config value.
-          config get key              Prints config value.
-
-       help                           Prints this help text.
-
-  OPTIONS
-      -o, --overwrite                 Overwrite previous value of bookmark.
-
-      -d, --directory                 Add bookmark if it is directory only.
-                                      If -f is provided last, -f will be used.
-
-      -f, --file                      Add bookmark if it is file only.
-                                      If -d is provided last, -d will be used.
-
-      -p, --pretty                    Show bookmark(s) or config results as a table.
-
-      -h, --help                      Prints help text.
-
-  CONFIG
-      CONFDIR         Config file directory. Default: ~/.bm/
-      CONFNAME        Config file name. Default: conf.json (~/.bm/conf.json)
-
-  RETURN CODES
-      1               Unrecognized argument.
-      2               No command argument is provided
-      3               User's Home Directoty cannot be accessed.
-      4               Store file parsing error
-      5               Store file serialization error
-      6               Unable to write to store file
-      7               Command verification error for given options of command
-      8               Impossible command error.
-      9               Add Command: Given bookmark path is not found.
-      10              Add Command: Given Option/Flag is not recognized.
-      255             Help is printed
-"#;
-    print!("{}\n",help);
-    std::process::exit(error::ErrorCode::HelpPrinted as i32);
-}
 
 /// Print usage text and exit with non-zero code.
 fn print_usage(any_code : Option<ErrorCode>) {
@@ -103,7 +38,7 @@ pub fn parse_cli_options() -> Command {
 
     match std::env::args().nth(1).as_deref() {
         Some("h") | Some("help") | Some("-h") | Some("--help") => {
-            command = Command::new(CommandType::HELP, args_options);    // args_option = None
+            command = Command::new(CommandType::HELP, None);    // args_option = None
         }
         Some("a") | Some("add") => {
                 command = Command::new(CommandType::ADD, args_options);

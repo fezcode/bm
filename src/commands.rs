@@ -1,5 +1,7 @@
 mod add;
 mod show;
+mod delete;
+mod help;
 
 use std::collections::HashMap;
 use crate::utils::error;
@@ -46,7 +48,6 @@ impl Command {
     }
 
     /// Execute
-    ///
     pub fn execute(&self, store: &mut HashMap<String, String>) -> ExecutionResult {
         let mut result : ExecutionResult = Default::default();
         let params = &self.args;
@@ -57,10 +58,16 @@ impl Command {
             CommandType::ADD => {
                 result = crate::commands::add::add(params, store);
             }
-            CommandType::SHOW => {}
-            CommandType::DELETE => {}
+            CommandType::SHOW => {
+                result = crate::commands::show::show(params, store);
+            }
+            CommandType::DELETE => {
+                result = crate::commands::delete::delete(params, store);
+            }
             CommandType::CONFIG => {}
-            CommandType::HELP => {}
+            CommandType::HELP => {
+                crate::commands::help::print_help();
+            }
         }
 
         result

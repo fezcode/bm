@@ -22,6 +22,13 @@ bm --help                            : Prints help text.
    -o, --overwrite
        Overwrites bookmark with new given value if a bookmark with
        same name exists.
+       
+   -d, --directory-only
+       Add bookmark if it is directory only. If -f is provided last, -f will be used.
+       
+   -f, --file-only 
+       Add bookmark if it is file only. If -d is provided last, -d will be used.
+       
 ```
 
 .into()

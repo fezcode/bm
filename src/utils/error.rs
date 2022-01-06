@@ -10,6 +10,10 @@ pub enum ErrorCode {
     AddCommandPathNotFound = 9,
     AddCommandOptionMatchFailed = 10,
     AddCommandNotOverwritable = 11,
+    AddCommandPathTypeError = 12,
+    ShowCommandNameNotFound = 13,
+    DeleteCommandNameNotGiven = 14,
+    DeleteCommandNameNotFound = 15,
     HelpPrinted = 255
 }
 
