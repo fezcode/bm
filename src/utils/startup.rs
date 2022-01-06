@@ -85,22 +85,25 @@ pub fn parse_cli_options() -> Command {
     let mut arguments : Vec<String> = std::env::args().collect();
 
     // No argument is given.
+    // ./bm
     if arguments.len() == 1 {
         print_usage(Some(ErrorCode::NoArgumentProvided));
     }
 
     // At least one possible command is given.
-    arguments.drain(0..2);
+    // ./bm add
+    arguments.drain(0..2);      // 0 and 1
     let mut args_options: Option<Vec<String>> = None;
 
     // Create command arguments.
+    // (./bm add) NAME [PATH]
     if arguments.len() > 0 {
         args_options = Some(arguments);
     }
 
     match std::env::args().nth(1).as_deref() {
         Some("h") | Some("help") | Some("-h") | Some("--help") => {
-            command = Command::new(CommandType::HELP, None);
+            command = Command::new(CommandType::HELP, args_options);    // args_option = None
         }
         Some("a") | Some("add") => {
                 command = Command::new(CommandType::ADD, args_options);

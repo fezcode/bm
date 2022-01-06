@@ -13,7 +13,7 @@ pub fn create_store_content(store : HashMap<String, String>  ) -> String {
         bookmark_vec.push(bm);
     }
 
-    store_map.insert("bookmark".to_string(), bookmark_vec);
+    store_map.insert("bookmark".into(), bookmark_vec);
 
     let toml = toml::to_string(&store_map);
     match toml {
@@ -23,5 +23,5 @@ pub fn create_store_content(store : HashMap<String, String>  ) -> String {
                                  ErrorCode::StoreFileSerializationError);
         }
     }
-    return "".to_string();
+    return "".into();
 }

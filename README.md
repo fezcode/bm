@@ -24,3 +24,6 @@ bm --help                            : Prints help text.
        same name exists.
 ```
 
+.into()
+.to_string()
+.to_owned()

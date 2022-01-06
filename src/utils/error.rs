@@ -9,6 +9,7 @@ pub enum ErrorCode {
     ImpossibleCommand = 8,
     AddCommandPathNotFound = 9,
     AddCommandOptionMatchFailed = 10,
+    AddCommandNotOverwritable = 11,
     HelpPrinted = 255
 }
 
