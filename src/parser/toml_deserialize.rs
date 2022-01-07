@@ -14,7 +14,7 @@ pub fn parse_string(toml_string : String) -> HashMap<String, String> {
 
     let parse_result: Result<HashMap<String, Vec<Bookmark>>, toml::de::Error> = toml::from_str(toml_string.as_str());
     let mut bm_map : HashMap<String, String> = Default::default();
-    let mut vec: Vec<Bookmark> = Vec::<Bookmark>::new();
+    let vec: Vec<Bookmark> = Vec::<Bookmark>::new();
     match parse_result {
         Ok(bookmarks_table) => {
             let bookmarks = &bookmarks_table.get("bookmark").unwrap_or(&vec);
@@ -25,21 +25,4 @@ pub fn parse_string(toml_string : String) -> HashMap<String, String> {
         }
     }
     return bm_map;
-
-    // let bookmarks_table: HashMap<String, Vec<Bookmark>> = toml::from_str(toml_string.as_str()).expect("Store file cannot be parsed");
-
-    // let bookmarks_parser: Result<HashMap, Error> = toml::from_str(toml_string.as_str());
-    // let mut bookmarks_table;
-    // match bookmarks_parser {
-    //     Ok(a) => {
-    //         bookmarks_table = &a["bookmark"];
-    //         println!("{:?}", bookmarks_table);
-    //     },
-    //     Err(err) => {
-    //         println!("Store file cannot be parsed! {}", err);
-    //         std::process::exit(3);
-    //     }
-    // }
-    // let bookmarks_table: HashMap<String, Vec<Bookmark>> = toml::from_str(toml_string.as_str()).expect("Store file cannot be parsed")
-    // let bookmarks_table : HashMap<String, Vec<Bookmark>> = toml::from_str(toml_string.as_str())
 }

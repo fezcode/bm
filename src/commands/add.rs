@@ -80,7 +80,6 @@ pub fn add(params: &Option<Vec<String>>, store: &mut HashMap<String, String>) ->
             path = canon_path.absolutize().unwrap().display().to_string();
             store.insert(name, path);
             return ExecutionResult{ success: true, write_to_file: true };
-
         }
     }
     return ExecutionResult{ success: false, write_to_file: false };

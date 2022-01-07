@@ -27,10 +27,6 @@ pub fn print_help() {
       delete
           delete <name>               Delete bookmark with given name
 
-      config                          Read or edit configuration
-          config set key=value[,k=v]  Sets config value.
-          config get key              Prints config value.
-
        help                           Prints this help text.
 
        debug                          Activates debug mode for other commands.
@@ -48,26 +44,25 @@ pub fn print_help() {
       -f, --file-only                 Add bookmark if it is file only.
                                       If -d is provided last, -d will be used.
 
-      -p, --pretty                    Show bookmark(s) or config results as a table.
-
       -h, --help                      Prints help text.
-
-  CONFIG
-      CONFDIR         Config file directory. Default: ~/.bm/
-      CONFNAME        Config file name. Default: conf.json (~/.bm/conf.json)
 
   RETURN CODES
       1               Unrecognized argument.
-      2               No command argument is provided
+      2               No command argument is provided.
       3               User's Home Directoty cannot be accessed.
-      4               Store file parsing error
-      5               Store file serialization error
-      6               Unable to write to store file
-      7               Command verification error for given options of command
+      4               Store file parsing error.
+      5               Store file serialization error.
+      6               Unable to write to store file.
+      7               Command verification error for given options of command.
       8               Impossible command error.
       9               Add Command: Given bookmark path is not found.
       10              Add Command: Given Option/Flag is not recognized.
-      255             Help is printed
+      11              Add Command: Given name already exists and overwrite option not given.
+      12              Add Command: Given path is not given path type (file or directory).
+      13              Show Command: Given name not found in store.
+      14              Delete Command: No name is given.
+      15              Delete Command: Given name not found in store.
+      255             Help is printed.
 "#;
     print!("{}\n",help);
     std::process::exit(error::ErrorCode::HelpPrinted as i32);

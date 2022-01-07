@@ -4,7 +4,7 @@ use crate::utils::error::ErrorCode;
 
 /// Print usage text and exit with non-zero code.
 fn print_usage(any_code : Option<ErrorCode>) {
-    let help = r#"Usage: bm [debug] <asdc> [name] [directory]
+    let help = r#"Usage: bm [debug] <asd> [name] [directory]
   For detailed help, type `bm help`
     "#;
     print!("{}\n",help);
