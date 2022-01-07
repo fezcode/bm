@@ -1,14 +1,11 @@
 use std::collections::HashMap;
-use std::fmt::format;
-use std::path::PathBuf;
-use path_absolutize::Absolutize;
 use crate::utils::error;
 use crate::utils::success::ExecutionResult;
 
 /// bm show
 /// bm show NAME
 pub fn show(params: &Option<Vec<String>>, store: &mut HashMap<String, String>) -> ExecutionResult {
-    let mut name : String;
+    let name : String;
     match params {
         // Show all
         None => {

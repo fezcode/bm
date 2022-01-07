@@ -12,3 +12,9 @@ impl Default for ExecutionResult {
         }
     }
 }
+
+impl ExecutionResult {
+    pub fn print(&self) {
+        println!("[DBG|Result:{:?}]", self);
+    }
+}

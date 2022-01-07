@@ -11,7 +11,7 @@ enum PathType {
 }
 
 pub fn add(params: &Option<Vec<String>>, store: &mut HashMap<String, String>) -> ExecutionResult {
-    let mut name : String;
+    let name : String;
     let mut path: String;
     let mut addanyway = false;
     let mut overwritable = false;

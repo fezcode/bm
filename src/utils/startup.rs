@@ -2,10 +2,9 @@ use crate::commands::{Command, CommandType};
 use crate::utils::error;
 use crate::utils::error::ErrorCode;
 
-
 /// Print usage text and exit with non-zero code.
 fn print_usage(any_code : Option<ErrorCode>) {
-    let help = r#"Usage: bm <asdc> [name] [directory]
+    let help = r#"Usage: bm [debug] <asdc> [name] [directory]
   For detailed help, type `bm help`
     "#;
     print!("{}\n",help);
@@ -15,9 +14,18 @@ fn print_usage(any_code : Option<ErrorCode>) {
     }
 }
 
-pub fn parse_cli_options() -> Command {
+pub fn parse_cli_options() -> (Command, bool) {
     let mut command: Command = Command::new(CommandType::NONE, None);
     let mut arguments : Vec<String> = std::env::args().collect();
+    let mut command_index = 1;
+    let mut debug_mode = false;
+
+    if arguments.len() > 1 && arguments[1] == "debug" {
+        println!("[DBG|Debug Mode]");
+        arguments.remove(1);
+        command_index = 2;
+        debug_mode = true;
+    }
 
     // No argument is given.
     // ./bm
@@ -36,7 +44,7 @@ pub fn parse_cli_options() -> Command {
         args_options = Some(arguments);
     }
 
-    match std::env::args().nth(1).as_deref() {
+    match std::env::args().nth(command_index).as_deref() {
         Some("h") | Some("help") | Some("-h") | Some("--help") => {
             command = Command::new(CommandType::HELP, None);    // args_option = None
         }
@@ -61,5 +69,5 @@ pub fn parse_cli_options() -> Command {
             print_usage(None);
         }
     }
-    command
+    (command, debug_mode)
 }

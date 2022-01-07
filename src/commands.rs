@@ -44,7 +44,7 @@ impl Command {
     }
 
     pub fn print_command(&self) {
-        println!("{:?} --> {:?}", self.type_of, self.args);
+        println!("[DBG|CMD:{:?} --> {:?}]", self.type_of, self.args);
     }
 
     /// Execute

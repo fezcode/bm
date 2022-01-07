@@ -14,9 +14,10 @@ pub fn parse_string(toml_string : String) -> HashMap<String, String> {
 
     let parse_result: Result<HashMap<String, Vec<Bookmark>>, toml::de::Error> = toml::from_str(toml_string.as_str());
     let mut bm_map : HashMap<String, String> = Default::default();
+    let mut vec: Vec<Bookmark> = Vec::<Bookmark>::new();
     match parse_result {
         Ok(bookmarks_table) => {
-            let bookmarks = &bookmarks_table["bookmark"];
+            let bookmarks = &bookmarks_table.get("bookmark").unwrap_or(&vec);
             bm_map = bookmarks.into_iter().map(|bm| (bm.name_clone(), bm.dir_clone()) ).collect();
         },
         Err(e) => {

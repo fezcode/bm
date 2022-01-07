@@ -1,9 +1,4 @@
-use std::collections::HashMap;
-use std::fmt::format;
-use std::path::PathBuf;
-use path_absolutize::Absolutize;
 use crate::utils::error;
-use crate::utils::success::ExecutionResult;
 
 /// bm delete NAME
 /// Print help text and exit with non-zero code.
@@ -37,6 +32,10 @@ pub fn print_help() {
           config get key              Prints config value.
 
        help                           Prints this help text.
+
+       debug                          Activates debug mode for other commands.
+                                      Must be given as the first argument to application.
+                                      Example: bm debug add name path --option
 
   OPTIONS
       -o, --overwrite                 Overwrite previous value of bookmark.

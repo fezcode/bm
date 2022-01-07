@@ -12,6 +12,7 @@ bm c/config set key=value[,k=v]      : Edit config values
 bm c/config get key[,key2]           : Get config values
 bm h/help                            : Prints help text.
 bm --help                            : Prints help text.
+bm debug <any full command>          : For any command, activates debug mode.
 ```
 
 ### Add Options
