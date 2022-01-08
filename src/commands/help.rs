@@ -27,9 +27,9 @@ pub fn print_help() {
       delete
           delete <name>               Delete bookmark with given name
 
-       help                           Prints this help text.
+      help                            Prints this help text.
 
-       debug                          Activates debug mode for other commands.
+      debug                           Activates debug mode for other commands.
                                       Must be given as the first argument to application.
                                       Example: bm debug add name path --option
 
@@ -47,6 +47,7 @@ pub fn print_help() {
       -h, --help                      Prints help text.
 
   RETURN CODES
+      0               Success.
       1               Unrecognized argument.
       2               No command argument is provided.
       3               User's Home Directoty cannot be accessed.

@@ -26,7 +26,6 @@ pub enum CommandType {
     ADD,
     SHOW,
     DELETE,
-    CONFIG,
     HELP
 }
 
@@ -59,12 +58,11 @@ impl Command {
                 result = crate::commands::add::add(params, store);
             }
             CommandType::SHOW => {
-                result = crate::commands::show::show(params, store);
+                result = crate::commands::show::show(params, store.to_owned());
             }
             CommandType::DELETE => {
                 result = crate::commands::delete::delete(params, store);
             }
-            CommandType::CONFIG => {}
             CommandType::HELP => {
                 crate::commands::help::print_help();
             }

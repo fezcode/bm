@@ -18,7 +18,6 @@ fn main() {
 
     let mut store_map = parse_string(store_content);
 
-
     if debug_mode {
         command.print_command();
     }

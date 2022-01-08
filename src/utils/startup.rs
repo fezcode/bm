@@ -4,7 +4,7 @@ use crate::utils::error::ErrorCode;
 
 /// Print usage text and exit with non-zero code.
 fn print_usage(any_code : Option<ErrorCode>) {
-    let help = r#"Usage: bm [debug] <asd> [name] [directory]
+    let help = r#"Usage: bm [debug] <acsd> [name] [directory]
   For detailed help, type `bm help`
     "#;
     print!("{}\n",help);
@@ -56,9 +56,6 @@ pub fn parse_cli_options() -> (Command, bool) {
         }
         Some("d") | Some("delete") => {
             command = Command::new(CommandType::DELETE, args_options);
-        }
-        Some("c") | Some("config") => {
-            command = Command::new(CommandType::CONFIG, args_options);
         }
         // Some(x) => {
         //     error::print_error_and_exit("No argument provided".to_string(),
