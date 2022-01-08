@@ -37,9 +37,12 @@ pub fn show(params: &Option<Vec<String>>, store: HashMap<String, String>) -> Exe
     match params {
         // Show all
         None => {
-            for x in store {
-                println!("{} {}", x.0, x.1);
+            let mut sorted: Vec<_> = store.iter().collect();
+            sorted.sort_by_key(|a| a.0);
+            for (key, value) in sorted.iter() {
+                println!("{} {}", key, value);
             }
+
         }
         Some(p) => {
             name = p[0].to_owned();
@@ -61,6 +64,13 @@ pub fn show(params: &Option<Vec<String>>, store: HashMap<String, String>) -> Exe
                 // \ NAME | PRETTY_LONG_PATH_EITHER_FILE_OR_DIR |
                 // ----------------------------------------------
 
+                let mut sorted: Vec<_> = store.iter().collect();
+                sorted.sort_by_key(|a| a.0);
+
+                // for (key, value) in sorted.iter() {
+                //     println!("{} {}", key, value);
+                // }
+
                 let mut table: String = "".into();
                 let mut table_content : String = "".into();
                 // let mut line_size = 0 as usize;
@@ -75,7 +85,7 @@ pub fn show(params: &Option<Vec<String>>, store: HashMap<String, String>) -> Exe
                 termsize::get().map(|size| {
                     r = size.rows as usize;
                     c = size.cols as usize;
-                    println!("rows {} cols {}", size.rows, size.cols)
+                    // println!("rows {} cols {}", size.rows, size.cols)
                 });
 
                 // Get max sizes of bookmark entries.
@@ -86,35 +96,34 @@ pub fn show(params: &Option<Vec<String>>, store: HashMap<String, String>) -> Exe
 
                 if max_name_len > c/2 - 4 {
                     max_name_len = c/2 - 4; // for ellipses.
-                    println!("SOME_ONE_BIGGER: {}", max_name_len);
                 }
 
                 // max_path_len = c - max_name_len;
 
-                for x in &store {
+                for (key, value) in sorted.iter() {
                     let bm_str : String;
                     let bm_path: String;
 
                     let bm_name;
-                    if x.0.len() > max_name_len {
-                         bm_name = format!("{:<w$}...", &x.0[..max_name_len-3], w=max_name_len-3);
+                    if key.len() > max_name_len {
+                        bm_name = format!("{:<w$}...", &key[..max_name_len-3], w=max_name_len-3);
                     } else {
-                        bm_name = format!("{:<w$}",x.0, w=max_name_len);
+                        bm_name = format!("{:<w$}",key, w=max_name_len);
                     }
 
                     possible_path_len = c - (7 + max_name_len);
 
                     // limit path
-                    if x.1.len() > possible_path_len {
-                        println!("LENGTH TOO LONG: current: {}, possible: {}", 7 + x.0.len() + x.1.len(), possible_path_len);
-                        // bm_path = format!("{name:<.ppl$}", name=x.1, ppl = possible_path_len);
+                    if value.len() > possible_path_len {
+                        // println!("LENGTH TOO LONG: current: {}, possible: {}", 7 + key.len() + value.len(), possible_path_len);
+                        // bm_path = format!("{name:<.ppl$}", name=value, ppl = possible_path_len);
 
                         let range = possible_path_len - 13;
-                        let temp_path = format!("{}{}{}",&x.1[0..10], "...", &x.1[x.1.len()-range..x.1.len()]);
+                        let temp_path = format!("{}{}{}",&value[0..10], "...", &value[value.len()-range..value.len()]);
                         bm_path = format!("{}", temp_path);
 
                     } else {
-                        bm_path = format!("{name:<ppl$}", name=x.1, ppl = possible_path_len);
+                        bm_path = format!("{name:<ppl$}", name=value, ppl = possible_path_len);
                     }
                     bm_str = format!("\n{line_d} {name} {line_s} {path} {line_d}", name=bm_name, path=bm_path,
                                      line_d=Chars::LINE_D, line_s=Chars::LINE_S);

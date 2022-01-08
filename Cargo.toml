@@ -1,8 +1,12 @@
 [package]
 name = "bm"
-version = "0.7.0"
+version = "0.8.0"
 authors = ["fezcode <samil.bulbul@gmail.com>"]
 edition = "2018"
+
+[package.metadata.deb]
+maintainer = "Fezcode <samil.bulbul@gmail.com>"
+copyright = "Copyright (c) 2022 fezcode <samil.bulbul@gmail.com>"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -14,3 +18,4 @@ serde_derive = "1.0"
 path-absolutize = "3.0.11"
 termsize = "0.1.4"
 #getopts = "0.2"
+
