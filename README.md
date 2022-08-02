@@ -14,6 +14,7 @@ Creates `~/.bm` directory to store `store.toml` file which contains your bookmar
 | `bm d/delete <name>                  ` | Delete bookmark with given name.                                          |
 | `bm h/help                           ` | Prints help text.                                                         |
 | `bm -h/--help                        ` | Prints help text.                                                         |
+| `bm v/version/-v/--version           ` | Prints version information.                                               |
 | `bm debug <any full command>         ` | For any command, activates debug mode, if any debug prints are available. |
 
 ### Add Options
