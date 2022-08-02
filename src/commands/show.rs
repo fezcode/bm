@@ -94,6 +94,8 @@ pub fn show(params: &Option<Vec<String>>, store: HashMap<String, String>) -> Exe
                     if x.1.len() > max_path_len { max_path_len = x.1.len(); }
                 }
 
+                
+
                 if max_name_len > c/2 - 4 {
                     max_name_len = c/2 - 4; // for ellipses.
                 }
@@ -107,11 +109,15 @@ pub fn show(params: &Option<Vec<String>>, store: HashMap<String, String>) -> Exe
                     let bm_name;
                     if key.len() > max_name_len {
                         bm_name = format!("{:<w$}...", &key[..max_name_len-3], w=max_name_len-3);
-                    } else {
+                    } else if key.len() < 4 {   // header row 'Name' string
+                        max_name_len = 4;
+                        bm_name = format!("{:<w$}",key, w=max_name_len);
+                    } 
+                    else {
                         bm_name = format!("{:<w$}",key, w=max_name_len);
                     }
 
-                    possible_path_len = c - (7 + max_name_len);
+                    possible_path_len = c - (10 + max_name_len);
 
                     // limit path
                     if value.len() > possible_path_len {
