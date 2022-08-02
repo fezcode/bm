@@ -4,7 +4,7 @@ use crate::utils::error::ErrorCode;
 
 /// Print usage text and exit with non-zero code.
 fn print_usage(any_code : Option<ErrorCode>) {
-    let help = r#"Usage: bm [debug] <acsd> [name] [directory]
+    let help = r#"Usage: bm [debug] <asdhv> [name] [directory]
   For detailed help, type `bm help`
     "#;
     print!("{}\n",help);
@@ -45,8 +45,11 @@ pub fn parse_cli_options() -> (Command, bool) {
     }
 
     match std::env::args().nth(command_index).as_deref() {
-        Some("h") | Some("help") | Some("-h") | Some("--help") => {
+        Some("h") | Some("help") | Some("-h") | Some("--help")  => {
             command = Command::new(CommandType::HELP, None);    // args_option = None
+        }
+        Some("v") | Some("version") | Some("-v") | Some("--version") => {
+            command = Command::new(CommandType::VERSION, None);    // args_option = None
         }
         Some("a") | Some("add") => {
                 command = Command::new(CommandType::ADD, args_options);
@@ -57,6 +60,7 @@ pub fn parse_cli_options() -> (Command, bool) {
         Some("d") | Some("delete") => {
             command = Command::new(CommandType::DELETE, args_options);
         }
+        
         // Some(x) => {
         //     error::print_error_and_exit("No argument provided".to_string(),
         //                                 error::ErrorCode::NoArgumentProvided);

@@ -26,7 +26,8 @@ pub enum CommandType {
     ADD,
     SHOW,
     DELETE,
-    HELP
+    HELP,
+    VERSION
 }
 
 pub struct Command {
@@ -65,6 +66,9 @@ impl Command {
             }
             CommandType::HELP => {
                 crate::commands::help::print_help();
+            }
+            CommandType::VERSION => {
+                crate::commands::help::print_version();
             }
         }
 

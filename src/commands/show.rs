@@ -100,6 +100,10 @@ pub fn show(params: &Option<Vec<String>>, store: HashMap<String, String>) -> Exe
                     max_name_len = c/2 - 4; // for ellipses.
                 }
 
+                if max_name_len < 4 {
+                    max_name_len = 4;
+                }
+
                 // max_path_len = c - max_name_len;
 
                 for (key, value) in sorted.iter() {
@@ -109,11 +113,8 @@ pub fn show(params: &Option<Vec<String>>, store: HashMap<String, String>) -> Exe
                     let bm_name;
                     if key.len() > max_name_len {
                         bm_name = format!("{:<w$}...", &key[..max_name_len-3], w=max_name_len-3);
-                    } else if key.len() < 4 {   // header row 'Name' string
-                        max_name_len = 4;
-                        bm_name = format!("{:<w$}",key, w=max_name_len);
-                    } 
-                    else {
+                    
+                    } else {
                         bm_name = format!("{:<w$}",key, w=max_name_len);
                     }
 

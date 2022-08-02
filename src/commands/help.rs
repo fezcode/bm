@@ -1,11 +1,14 @@
 use crate::utils::error;
 
-/// bm delete NAME
+/// bm help
 /// Print help text and exit with non-zero code.
 pub fn print_help() {
     let help = r#"
   NAME
       bm - Bookmark Manager
+
+  VERSION
+      {version}
 
   SYNOPSIS
       bm [command] [options]
@@ -28,6 +31,8 @@ pub fn print_help() {
           delete <name>               Delete bookmark with given name
 
       help                            Prints this help text.
+
+      version                         Prints version info.
 
       debug                           Activates debug mode for other commands.
                                       Must be given as the first argument to application.
@@ -65,6 +70,12 @@ pub fn print_help() {
       15              Delete Command: Given name not found in store.
       255             Help is printed.
 "#;
-    print!("{}\n",help);
+    let formatted_version = help.replace("{version}", env!("CARGO_PKG_VERSION"));
+    print!("{}\n",formatted_version);
+    std::process::exit(error::ErrorCode::HelpPrinted as i32);
+}
+
+pub fn print_version() {
+    println!("{}", env!("CARGO_PKG_VERSION"));
     std::process::exit(error::ErrorCode::HelpPrinted as i32);
 }
