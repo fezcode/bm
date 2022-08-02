@@ -122,4 +122,48 @@ copyright = "Copyright (c) 2022 Username <username@example.com>"
 cargo deb
 ```
 
+## Creating RPM Package
+
+### Install
+
+```cargo install cargo-generate-rpm```
+
+### Usage
+
+```rust
+cargo build --release
+strip -s target/release/XXX
+cargo generate-rpm
+```
+
+### Configuration
+
+``` toml
+[package.metadata.generate-rpm]
+    name: the package name. If not present, package.name is used.
+    version: the package version. If not present, package.version is used.
+    license: the package license. If not present, package.license is used.
+    summary: the package summary/description. If not present, package.description is used.
+    assets: (mandatory) the array of the files to be included in the package
+        source: the location of that asset in the Rust project. (e.g. target/release/XXX) Wildcard character * is allowed.
+        dest: the install-destination. (e.g. /usr/bin/XXX) If source contains wildcard character *, it must be a directory, not a file path.
+        mode: the permissions as octal string. (e.g. 755 to indicate -rwxr-xr-x)
+        config: set true if it is a configuration file.
+        doc: set true if it is a document file.
+    release: optional string of release.
+    epoch: optional number of epoch.
+    pre_install_script: optional string of pre_install_script.
+    pre_uninstall_script: optional string of pre_uninstall_script.
+    post_install_script: optional string of post_install_script.
+    post_uninstall_script: optional string of post_uninstall_script.
+    requires: optional list of Requires
+    auto-req: optional string "no" to disable the automatic dependency process
+    obsoletes: optional list of Obsoletes
+    conflicts: optional list of Conflicts
+    provides: optional list of Provides
+```
+
+### Location
+```target/generate-rpm/XXX.rpm```
+
 **_[Source](https://blog.karmacomputing.co.uk/how-to-create-deb-package-from-rust/)_**

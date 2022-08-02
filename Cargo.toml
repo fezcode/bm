@@ -1,12 +1,22 @@
 [package]
 name = "bm"
-version = "0.8.0"
+version = "0.8.2"
 authors = ["fezcode <samil.bulbul@gmail.com>"]
 edition = "2018"
+description = "command line tool for file system bookmarks"
+license = "MIT"
 
 [package.metadata.deb]
 maintainer = "Fezcode <samil.bulbul@gmail.com>"
 copyright = "Copyright (c) 2022 fezcode <samil.bulbul@gmail.com>"
+
+
+[package.metadata.generate-rpm]
+name = "bm"
+assets = [
+    { source = "target/release/bm", dest = "/usr/bin/bm", mode = "775" }
+]
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
